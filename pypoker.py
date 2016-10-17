@@ -147,7 +147,7 @@ class PokerRules(object):
     }
 
     @classmethod
-    def get_amount_of_a_kind(cls, hand):
+    def _get_amount_of_a_kind(cls, hand):
         values = {}
 
         for card in hand.cards:
@@ -166,14 +166,14 @@ class PokerRules(object):
 
     @classmethod
     def is_four_of_a_kind(cls, hand):
-        if 4 in cls.get_amount_of_a_kind(hand):
+        if 4 in cls._get_amount_of_a_kind(hand):
             return True
 
         return False
 
     @classmethod
     def is_full_house(cls, hand):
-        return all(x in cls.get_amount_of_a_kind(hand) for x in [2, 3])
+        return all(x in cls._get_amount_of_a_kind(hand) for x in [2, 3])
 
     @classmethod
     def is_flush(cls, hand):
@@ -203,7 +203,7 @@ class PokerRules(object):
 
     @classmethod
     def is_tree_of_a_kind(cls, hand):
-        amount_of_a_kind = cls.get_amount_of_a_kind(hand)
+        amount_of_a_kind = cls._get_amount_of_a_kind(hand)
         if amount_of_a_kind.count(3) == 1 and amount_of_a_kind.count(1) == 2:
             return True
 
@@ -211,26 +211,26 @@ class PokerRules(object):
 
     @classmethod
     def is_two_pair(cls, hand):
-        if cls.get_amount_of_a_kind(hand).count(2) == 2:
+        if cls._get_amount_of_a_kind(hand).count(2) == 2:
             return True
 
         return False
 
     @classmethod
     def is_one_pair(cls, hand):
-        if cls.get_amount_of_a_kind(hand).count(2) == 1:
+        if cls._get_amount_of_a_kind(hand).count(2) == 1:
             return True
 
         return False
 
     @classmethod
     def is_high_card(cls, hand):
-        if cls.get_amount_of_a_kind(hand).count(1) == 5:
+        if cls._get_amount_of_a_kind(hand).count(1) == 5:
             return True
         return False
 
     @classmethod
-    def get_hand_functions(cls):
+    def _get_hand_is_methods(cls):
         return [
             cls.is_royal_flush, cls.is_straight_flush,
             cls.is_four_of_a_kind, cls.is_full_house,
@@ -254,7 +254,7 @@ class PokerRules(object):
 
     @classmethod
     def get_numeric_value_by_hand(cls, hand):
-        return cls._get_value_by_hand(hand, cls.get_hand_functions())
+        return cls._get_value_by_hand(hand, cls._get_hand_is_methods())
 
     @classmethod
     def get_value_by_hand(cls, hand):
