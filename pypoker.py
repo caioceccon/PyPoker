@@ -227,6 +227,7 @@ class PokerRules(object):
     def is_high_card(cls, hand):
         if cls._get_amount_of_a_kind(hand).count(1) == 5:
             return True
+
         return False
 
     @classmethod
