@@ -71,7 +71,7 @@ class Hand(object):
         self.cards = cards
 
     def __str__(self):
-        return "<hand %s, '%s'>" % (self.cards, self.hand_value())
+        return "<hand %s, '%s'>" % (self.cards, self.hand_value)
 
     def __repr__(self):
         return self.__str__()
@@ -104,6 +104,7 @@ class Hand(object):
             raise ValueError('5 cards required %s given' % hand.amount_of_cards)
         return hand
 
+    @property
     def hand_value(self):
         return PokerRules.get_value_by_hand(self)
 
