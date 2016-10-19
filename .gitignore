@@ -1,3 +1,5 @@
 *.pyc
 rules.txt
 .coverage
+.DS_Store
+cover/
