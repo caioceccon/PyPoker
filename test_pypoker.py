@@ -146,7 +146,6 @@ class TestPokerRules(unittest.TestCase):
 
         self.assertTrue(PokerRules.is_four_of_a_kind(hand))
 
-
     def test_is_full_house(self):
         hand = Hand([
             Card('2', 'C'),
@@ -224,6 +223,434 @@ class TestPokerRules(unittest.TestCase):
 
         self.assertTrue(PokerRules.is_high_card(hand))
 
+        hand = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('6', 'S'),
+            Card('4', 'D'),
+            Card('8', 'H'),
+        ])
+
+        self.assertFalse(PokerRules.is_high_card(hand))
+
+    def test_draw_royal_flush(self):
+        royal_flush1 = Hand([
+            Card('T', 'C'),
+            Card('J', 'C'),
+            Card('Q', 'C'),
+            Card('K', 'C'),
+            Card('A', 'C'),
+        ])
+
+        royal_flush2 = Hand([
+            Card('T', 'D'),
+            Card('J', 'D'),
+            Card('Q', 'D'),
+            Card('K', 'D'),
+            Card('A', 'D'),
+        ])
+
+        self.assertEquals(royal_flush1, royal_flush2)
+
+    def test_draw_straight_flush(self):
+        straight_flush1 = Hand([
+            Card('9', 'C'),
+            Card('T', 'C'),
+            Card('J', 'C'),
+            Card('Q', 'C'),
+            Card('K', 'C'),
+        ])
+
+        straight_flush2 = Hand([
+            Card('9', 'D'),
+            Card('T', 'D'),
+            Card('J', 'D'),
+            Card('Q', 'D'),
+            Card('K', 'D'),
+        ])
+        self.assertEquals(straight_flush1, straight_flush2)
+
+        lower_straight_flush = Hand([
+            Card('8', 'C'),
+            Card('9', 'C'),
+            Card('T', 'C'),
+            Card('J', 'C'),
+            Card('Q', 'C'),
+        ])
+
+        higher_straight_flush = Hand([
+            Card('9', 'D'),
+            Card('T', 'D'),
+            Card('J', 'D'),
+            Card('Q', 'D'),
+            Card('K', 'D'),
+        ])
+        self.assertGreater(higher_straight_flush, lower_straight_flush)
+
+    def test_draw_four_of_a_kind(self):
+        four_of_a_kind1 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('9', 'S'),
+            Card('K', 'C'),
+        ])
+
+        four_of_a_kind2 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('9', 'S'),
+            Card('K', 'C'),
+        ])
+        self.assertEquals(four_of_a_kind1, four_of_a_kind2)
+
+        lower_four_of_a_kind = Hand([
+            Card('8', 'C'),
+            Card('8', 'D'),
+            Card('8', 'H'),
+            Card('8', 'S'),
+            Card('K', 'C'),
+        ])
+
+        higher_four_of_a_kind = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('9', 'S'),
+            Card('A', 'C'),
+        ])
+        self.assertGreater(higher_four_of_a_kind, lower_four_of_a_kind)
+
+        lower_four_of_a_kind1 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('9', 'S'),
+            Card('K', 'C'),
+        ])
+
+        higher_four_of_a_kind1 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('9', 'S'),
+            Card('A', 'C'),
+        ])
+        self.assertGreater(higher_four_of_a_kind1, lower_four_of_a_kind1)
+
+    def test_draw_full_house(self):
+        full_house1 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('K', 'S'),
+            Card('K', 'C'),
+        ])
+
+        full_house2 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('K', 'S'),
+            Card('K', 'C'),
+        ])
+        self.assertEquals(full_house1, full_house2)
+
+        lower_full_house = Hand([
+            Card('7', 'C'),
+            Card('7', 'D'),
+            Card('7', 'H'),
+            Card('K', 'S'),
+            Card('K', 'C'),
+        ])
+
+        higher_full_house = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('A', 'S'),
+            Card('A', 'C'),
+        ])
+        self.assertGreater(higher_full_house, lower_full_house)
+
+        lower_full_house1 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('K', 'S'),
+            Card('K', 'C'),
+        ])
+
+        higher_full_house1 = Hand([
+            Card('9', 'C'),
+            Card('9', 'D'),
+            Card('9', 'H'),
+            Card('A', 'S'),
+            Card('A', 'C'),
+        ])
+        self.assertGreater(higher_full_house1, lower_full_house1)
+
+    def test_draw_flush(self):
+        flush1 = Hand([
+            Card('9', 'C'),
+            Card('A', 'C'),
+            Card('J', 'C'),
+            Card('K', 'C'),
+            Card('8', 'C'),
+        ])
+
+        flush2 = Hand([
+            Card('9', 'C'),
+            Card('A', 'C'),
+            Card('J', 'C'),
+            Card('K', 'C'),
+            Card('8', 'C'),
+        ])
+        self.assertEquals(flush1, flush2)
+
+        lower_flush = Hand([
+            Card('9', 'C'),
+            Card('A', 'C'),
+            Card('J', 'C'),
+            Card('K', 'C'),
+            Card('5', 'C'),
+        ])
+
+        higher_flush = Hand([
+            Card('9', 'C'),
+            Card('A', 'C'),
+            Card('J', 'C'),
+            Card('K', 'C'),
+            Card('8', 'C'),
+        ])
+        self.assertGreater(higher_flush, lower_flush)
+
+    def test_draw_straight(self):
+        straight1 = Hand([
+            Card('2', 'C'),
+            Card('3', 'D'),
+            Card('4', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+
+        straight2 = Hand([
+            Card('2', 'C'),
+            Card('3', 'D'),
+            Card('4', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+        self.assertEquals(straight1, straight2)
+
+        lower_straight = Hand([
+            Card('2', 'C'),
+            Card('3', 'D'),
+            Card('4', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+
+        higher_straight = Hand([
+            Card('3', 'D'),
+            Card('4', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+            Card('7', 'C'),
+        ])
+        self.assertGreater(higher_straight, lower_straight)
+
+    def test_draw_tree_of_a_kind(self):
+        tree_of_a_kind1 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('2', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+
+        tree_of_a_kind2 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('2', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+        self.assertEquals(tree_of_a_kind1, tree_of_a_kind2)
+
+        lower_tree_of_a_kind = Hand([
+            Card('2', 'D'),
+            Card('4', 'S'),
+            Card('2', 'H'),
+            Card('6', 'S'),
+            Card('2', 'C'),
+        ])
+
+        higher_tree_of_a_kind = Hand([
+            Card('2', 'D'),
+            Card('5', 'S'),
+            Card('2', 'H'),
+            Card('6', 'S'),
+            Card('2', 'C'),
+        ])
+        self.assertGreater(higher_tree_of_a_kind, lower_tree_of_a_kind)
+
+    def test_draw_two_pair(self):
+        two_pair1 = Hand([
+            Card('2', 'C'),
+            Card('6', 'S'),
+            Card('2', 'D'),
+            Card('5', 'H'),
+            Card('5', 'S'),
+        ])
+
+        two_pair2 = Hand([
+            Card('2', 'C'),
+            Card('6', 'S'),
+            Card('5', 'H'),
+            Card('2', 'D'),
+            Card('5', 'S'),
+        ])
+        self.assertEquals(two_pair1, two_pair2)
+
+        lower_two_pair = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('5', 'S'),
+            Card('5', 'H'),
+            Card('9', 'S'),
+        ])
+
+        higher_two_pair = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('6', 'H'),
+            Card('6', 'S'),
+            Card('4', 'S'),
+        ])
+        self.assertGreater(higher_two_pair, lower_two_pair)
+
+        lower_two_pair1 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('5', 'S'),
+            Card('5', 'H'),
+            Card('6', 'S'),
+        ])
+
+        higher_two_pair1 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('5', 'H'),
+            Card('5', 'S'),
+            Card('7', 'S'),
+        ])
+        self.assertGreater(higher_two_pair1, lower_two_pair1)
+
+        lower_two_pair1 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('6', 'S'),
+            Card('6', 'H'),
+            Card('9', 'S'),
+        ])
+
+        higher_two_pair1 = Hand([
+            Card('3', 'C'),
+            Card('3', 'D'),
+            Card('6', 'H'),
+            Card('6', 'S'),
+            Card('7', 'S'),
+        ])
+        self.assertGreater(higher_two_pair1, lower_two_pair1)
+
+    def test_draw_one_pair(self):
+        one_pair1 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+
+        one_pair2 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+        self.assertEquals(one_pair1, one_pair2)
+
+        lower_one_pair = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+
+        higher_one_pair = Hand([
+            Card('3', 'C'),
+            Card('3', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('8', 'S'),
+        ])
+        self.assertGreater(higher_one_pair, lower_one_pair)
+
+        lower_one_pair1 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+
+        higher_one_pair1 = Hand([
+            Card('2', 'C'),
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('8', 'S'),
+        ])
+        self.assertGreater(higher_one_pair1, lower_one_pair1)
+
+    def test_draw_high_card(self):
+        high_card1 = Hand([
+            Card('A', 'C'),
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+
+        high_card2 = Hand([
+            Card('A', 'C'),
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+        ])
+        self.assertEquals(high_card1, high_card2)
+
+        lower_high_card = Hand([
+            Card('2', 'D'),
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('6', 'S'),
+            Card('9', 'C'),
+        ])
+
+        higher_high_card = Hand([
+            Card('7', 'H'),
+            Card('5', 'S'),
+            Card('A', 'D'),
+            Card('6', 'S'),
+            Card('9', 'C'),
+        ])
+        self.assertGreater(higher_high_card, lower_high_card)
 
 if __name__ == '__main__':
     unittest.main()

@@ -251,7 +251,7 @@ class PokerRules(object):
 
     @classmethod
     def draw_royal_flush(cls, hand, other_hand):
-        cmp(cls.ROYAL_FLUSH, cls.ROYAL_FLUSH)
+        return cmp(cls.ROYAL_FLUSH, cls.ROYAL_FLUSH)
 
     @classmethod
     def draw_straight_flush(cls, hand, other_hand):
@@ -304,14 +304,7 @@ class PokerRules(object):
         other_hand_four_of_kind = cls._get_kind_by_amount(other_hand)
 
         if hand_four_of_kind[3] == other_hand_four_of_kind[3]:
-
-            hand_kicker = cls.get_kicker(hand, [hand_four_of_kind[3]])
-            other_hand_kicker = cls.get_kicker(
-                other_hand,
-                [other_hand_four_of_kind[3]]
-            )
-
-            return cmp(hand_kicker, other_hand_kicker)
+            return cls.draw_high_card(hand, other_hand)
 
         return cmp(hand_four_of_kind[3], other_hand_four_of_kind[3])
 
