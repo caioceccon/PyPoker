@@ -80,7 +80,7 @@ class TestHand(unittest.TestCase):
         hand = Hand(self.expected_cards)
         self.assertEquals(
             str(hand),
-            "<hand [4D, 4D, 4D, 7H, 8D], 'Straight Flush'>"
+            "<hand [4D, 4D, 4D, 7H, 8D], 'Tree of a Kind'>"
         )
 
     def test_parse_cards_string(self):
@@ -226,38 +226,4 @@ class TestPokerRules(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    #unittest.main()
-
-    hand = Hand([
-        Card('2', 'C'),
-        Card('2', 'D'),
-        Card('4', 'S'),
-        Card('4', 'D'),
-        Card('9', 'H'),
-    ])
-
-    hand2 = Hand([
-        Card('2', 'C'),
-        Card('2', 'D'),
-        Card('4', 'S'),
-        Card('4', 'D'),
-        Card('8', 'H'),
-    ])
-
-    hand = Hand([
-        Card('3', 'C'),
-        Card('T', 'D'),
-        Card('J', 'S'),
-        Card('K', 'D'),
-        Card('A', 'H'),
-    ])
-
-    hand2 = Hand([
-        Card('2', 'C'),
-        Card('T', 'D'),
-        Card('J', 'S'),
-        Card('K', 'D'),
-        Card('A', 'H'),
-    ])
-
-    print hand > hand2
+    unittest.main()

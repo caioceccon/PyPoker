@@ -168,7 +168,7 @@ class PokerRules(object):
     @classmethod
     def is_royal_flush(cls, hand):
         return (hand.sorted_cards[0].numeric_value == 10 and
-                is_straight_flush(hand))
+                cls.is_straight_flush(hand))
 
     @classmethod
     def is_straight_flush(cls, hand):
@@ -255,9 +255,11 @@ class PokerRules(object):
         hand_dict = cls._get_cards_dict(hand)
         return {v: k for k, v in hand_dict.iteritems()}
 
+    @classmethod
     def draw_royal_flush(cls, hand, other_hand):
         cmp(cls.ROYAL_FLUSH, cls.ROYAL_FLUSH)
 
+    @classmethod
     def draw_straight_flush(cls, hand, other_hand):
         return cls.draw_straight(hand, other_hand)
 
@@ -285,13 +287,12 @@ class PokerRules(object):
     def draw_flush(cls, hand, other_hand):
         return cls.draw_high_card(hand, other_hand)
 
-
+    @classmethod
     def draw_straight(cls, hand, other_hand):
-        hand_higher_card = cls.hand.sorted_cards[-1]
-        other_hand_higher_card = cls.other_hand.sorted_cards[-1]
+        hand_higher_card = hand.sorted_cards[-1]
+        other_hand_higher_card = other_hand.sorted_cards[-1]
         return cmp(hand_higher_card.numeric_value,
                    other_hand_higher_card.numeric_value)
-
 
     @classmethod
     def get_kicker(cls, hand, of_a_kinds):
@@ -333,12 +334,23 @@ class PokerRules(object):
         if hand_pairs[-1] == other_hand_pairs[-1]:
 
             if hand_pairs[0] == other_hand_pairs[0]:
+
                 hand_kicker = cls.get_kicker(hand, hand_pairs)
                 other_hand_kicker = cls.get_kicker(other_hand, other_hand_pairs)
 
                 return cmp(hand_kicker, other_hand_kicker)
 
             return cmp(hand_pairs[0], other_hand_pairs[0])
+
+        return cmp(hand_pairs[-1], other_hand_pairs[-1])
+
+    @classmethod
+    def draw_one_pair(cls, hand, other_hand):
+        hand_pairs = sorted(cls.get_hand_pairs(hand))
+        other_hand_pairs = sorted(cls.get_hand_pairs(other_hand))
+
+        if hand_pairs[0] == other_hand_pairs[0]:
+            return cls.draw_high_card(hand, other_hand)
 
         return cmp(hand_pairs[-1], other_hand_pairs[-1])
 
@@ -373,20 +385,20 @@ class PokerRules(object):
 
     @classmethod
     def cmp_hands(cls, hand, other_hand, hand_value):
-        import pdb; pdb.set_trace();
         draw_method = cls._hand_with_draw_methods().get(hand_value)
         return draw_method(hand, other_hand)
 
     @classmethod
-    def _get_value_by_hand(cls, hand, hand_methods=[], result=None, count=10):
-        if result is not None:
-            return count
+    def _get_value_by_hand(cls, hand, hand_methods=[], result=False, count=10):
 
         if not hand_methods:
             return None
 
         hand_method = hand_methods[0]
         result = hand_method(hand)
+
+        if result:
+            return count
 
         return cls._get_value_by_hand(hand, hand_methods[1:], result, count - 1)
 
