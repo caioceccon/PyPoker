@@ -226,4 +226,38 @@ class TestPokerRules(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    #unittest.main()
+
+    hand = Hand([
+        Card('2', 'C'),
+        Card('2', 'D'),
+        Card('4', 'S'),
+        Card('4', 'D'),
+        Card('9', 'H'),
+    ])
+
+    hand2 = Hand([
+        Card('2', 'C'),
+        Card('2', 'D'),
+        Card('4', 'S'),
+        Card('4', 'D'),
+        Card('8', 'H'),
+    ])
+
+    hand = Hand([
+        Card('3', 'C'),
+        Card('T', 'D'),
+        Card('J', 'S'),
+        Card('K', 'D'),
+        Card('A', 'H'),
+    ])
+
+    hand2 = Hand([
+        Card('2', 'C'),
+        Card('T', 'D'),
+        Card('J', 'S'),
+        Card('K', 'D'),
+        Card('A', 'H'),
+    ])
+
+    print hand > hand2
