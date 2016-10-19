@@ -249,15 +249,15 @@ class PokerRules(object):
         return {v: k for k, v in hand_dict.iteritems()}
 
     @classmethod
-    def draw_royal_flush(cls, hand, other_hand):
+    def untie_royal_flush(cls, hand, other_hand):
         return cmp(cls.ROYAL_FLUSH, cls.ROYAL_FLUSH)
 
     @classmethod
-    def draw_straight_flush(cls, hand, other_hand):
-        return cls.draw_straight(hand, other_hand)
+    def untie_straight_flush(cls, hand, other_hand):
+        return cls.untie_straight(hand, other_hand)
 
     @classmethod
-    def draw_four_of_a_kind(cls, hand, other_hand):
+    def untie_four_of_a_kind(cls, hand, other_hand):
         hand_four_of_kind = cls._get_kind_by_amount(hand)
         other_hand_four_of_kind = cls._get_kind_by_amount(other_hand)
 
@@ -267,7 +267,7 @@ class PokerRules(object):
         return cmp(hand_four_of_kind[4], other_hand_four_of_kind[4])
 
     @classmethod
-    def draw_full_house(cls, hand, other_hand):
+    def untie_full_house(cls, hand, other_hand):
         hand_four_of_kind = cls._get_kind_by_amount(hand)
         other_hand_four_of_kind = cls._get_kind_by_amount(other_hand)
 
@@ -277,11 +277,11 @@ class PokerRules(object):
         return cmp(hand_four_of_kind[3], other_hand_four_of_kind[3])
 
     @classmethod
-    def draw_flush(cls, hand, other_hand):
-        return cls.draw_high_card(hand, other_hand)
+    def untie_flush(cls, hand, other_hand):
+        return cls.untie_high_card(hand, other_hand)
 
     @classmethod
-    def draw_straight(cls, hand, other_hand):
+    def untie_straight(cls, hand, other_hand):
         hand_higher_card = hand.sorted_cards[-1]
         other_hand_higher_card = other_hand.sorted_cards[-1]
         return cmp(hand_higher_card.numeric_value,
@@ -298,12 +298,12 @@ class PokerRules(object):
         return hand_kicker[-1]
 
     @classmethod
-    def draw_tree_of_a_kind(cls, hand, other_hand):
+    def untie_tree_of_a_kind(cls, hand, other_hand):
         hand_four_of_kind = cls._get_kind_by_amount(hand)
         other_hand_four_of_kind = cls._get_kind_by_amount(other_hand)
 
         if hand_four_of_kind[3] == other_hand_four_of_kind[3]:
-            return cls.draw_high_card(hand, other_hand)
+            return cls.untie_high_card(hand, other_hand)
 
         return cmp(hand_four_of_kind[3], other_hand_four_of_kind[3])
 
@@ -313,7 +313,7 @@ class PokerRules(object):
         return [kind for kind, amount in cards_dict.iteritems() if amount == 2]
 
     @classmethod
-    def draw_two_pair(cls, hand, other_hand):
+    def untie_two_pair(cls, hand, other_hand):
         hand_pairs = sorted(cls.get_hand_pairs(hand))
         other_hand_pairs = sorted(cls.get_hand_pairs(other_hand))
 
@@ -331,17 +331,17 @@ class PokerRules(object):
         return cmp(hand_pairs[-1], other_hand_pairs[-1])
 
     @classmethod
-    def draw_one_pair(cls, hand, other_hand):
+    def untie_one_pair(cls, hand, other_hand):
         hand_pairs = sorted(cls.get_hand_pairs(hand))
         other_hand_pairs = sorted(cls.get_hand_pairs(other_hand))
 
         if hand_pairs[0] == other_hand_pairs[0]:
-            return cls.draw_high_card(hand, other_hand)
+            return cls.untie_high_card(hand, other_hand)
 
         return cmp(hand_pairs[-1], other_hand_pairs[-1])
 
     @classmethod
-    def draw_high_card(cls, hand, other_hand):
+    def untie_high_card(cls, hand, other_hand):
         hand_cards = hand.sorted_cards[::-1]
         other_hand_cards = other_hand.sorted_cards[::-1]
 
@@ -355,24 +355,24 @@ class PokerRules(object):
         return cmp(hand.sorted_cards[-1], other_hand.sorted_cards[-1])
 
     @classmethod
-    def _hand_with_draw_methods(cls):
+    def _hand_untie_methods(cls):
         return {
-            cls.ROYAL_FLUSH: cls.draw_royal_flush,
-            cls.STRAIGHT_FLUSH: cls.draw_straight_flush,
-            cls.FOUR_OF_A_KIND: cls.draw_four_of_a_kind,
-            cls.FULL_HOUSE: cls.draw_full_house,
-            cls.FLUSH: cls.draw_flush,
-            cls.STRAIGHT: cls.draw_straight,
-            cls.TREE_OF_A_KIND: cls.draw_tree_of_a_kind,
-            cls.TWO_PAIR: cls.draw_two_pair,
-            cls.ONE_PAIR: cls.draw_one_pair,
-            cls.HIGH_CARD: cls.draw_high_card
+            cls.ROYAL_FLUSH: cls.untie_royal_flush,
+            cls.STRAIGHT_FLUSH: cls.untie_straight_flush,
+            cls.FOUR_OF_A_KIND: cls.untie_four_of_a_kind,
+            cls.FULL_HOUSE: cls.untie_full_house,
+            cls.FLUSH: cls.untie_flush,
+            cls.STRAIGHT: cls.untie_straight,
+            cls.TREE_OF_A_KIND: cls.untie_tree_of_a_kind,
+            cls.TWO_PAIR: cls.untie_two_pair,
+            cls.ONE_PAIR: cls.untie_one_pair,
+            cls.HIGH_CARD: cls.untie_high_card
         }
 
     @classmethod
     def cmp_hands(cls, hand, other_hand, hand_value):
-        draw_method = cls._hand_with_draw_methods().get(hand_value)
-        return draw_method(hand, other_hand)
+        untie_method = cls._hand_untie_methods().get(hand_value)
+        return untie_method(hand, other_hand)
 
     @classmethod
     def _get_value_by_hand(cls, hand, hand_methods=[], result=False, count=10):

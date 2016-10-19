@@ -233,7 +233,7 @@ class TestPokerRules(unittest.TestCase):
 
         self.assertFalse(PokerRules.is_high_card(hand))
 
-    def test_draw_royal_flush(self):
+    def test_untie_royal_flush(self):
         royal_flush1 = Hand([
             Card('T', 'C'),
             Card('J', 'C'),
@@ -252,7 +252,7 @@ class TestPokerRules(unittest.TestCase):
 
         self.assertEquals(royal_flush1, royal_flush2)
 
-    def test_draw_straight_flush(self):
+    def test_untie_straight_flush(self):
         straight_flush1 = Hand([
             Card('9', 'C'),
             Card('T', 'C'),
@@ -287,7 +287,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_straight_flush, lower_straight_flush)
 
-    def test_draw_four_of_a_kind(self):
+    def test_untie_four_of_a_kind(self):
         four_of_a_kind1 = Hand([
             Card('9', 'C'),
             Card('9', 'D'),
@@ -339,7 +339,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_four_of_a_kind1, lower_four_of_a_kind1)
 
-    def test_draw_full_house(self):
+    def test_untie_full_house(self):
         full_house1 = Hand([
             Card('9', 'C'),
             Card('9', 'D'),
@@ -391,7 +391,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_full_house1, lower_full_house1)
 
-    def test_draw_flush(self):
+    def test_untie_flush(self):
         flush1 = Hand([
             Card('9', 'C'),
             Card('A', 'C'),
@@ -426,7 +426,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_flush, lower_flush)
 
-    def test_draw_straight(self):
+    def test_untie_straight(self):
         straight1 = Hand([
             Card('2', 'C'),
             Card('3', 'D'),
@@ -461,7 +461,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_straight, lower_straight)
 
-    def test_draw_tree_of_a_kind(self):
+    def test_untie_tree_of_a_kind(self):
         tree_of_a_kind1 = Hand([
             Card('2', 'C'),
             Card('2', 'D'),
@@ -496,7 +496,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_tree_of_a_kind, lower_tree_of_a_kind)
 
-    def test_draw_two_pair(self):
+    def test_untie_two_pair(self):
         two_pair1 = Hand([
             Card('2', 'C'),
             Card('6', 'S'),
@@ -565,7 +565,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_two_pair1, lower_two_pair1)
 
-    def test_draw_one_pair(self):
+    def test_untie_one_pair(self):
         one_pair1 = Hand([
             Card('2', 'C'),
             Card('2', 'D'),
@@ -617,7 +617,7 @@ class TestPokerRules(unittest.TestCase):
         ])
         self.assertGreater(higher_one_pair1, lower_one_pair1)
 
-    def test_draw_high_card(self):
+    def test_untie_high_card(self):
         high_card1 = Hand([
             Card('A', 'C'),
             Card('2', 'D'),
