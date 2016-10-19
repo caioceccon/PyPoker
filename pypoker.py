@@ -78,12 +78,6 @@ class Hand(object):
     def  __repr__(self):
         return self.__str__()
 
-    def check_higher_hand(self, other_hand):
-            hand_amount = PokerRules.get_value_by_hand(self),
-            hand_other_amount = PokerRules.get_value_by_hand(other_hand)
-            if hand_amount != hand_other_amount:
-                return cmp(hand_amount, hand_other_amount)
-
     def __cmp__(self, other_hand):
         hand_value = PokerRules.get_numeric_value_by_hand(self)
         other_hand_value = PokerRules.get_numeric_value_by_hand(other_hand)
