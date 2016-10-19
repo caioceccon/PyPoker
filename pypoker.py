@@ -34,7 +34,7 @@ class Card(object):
     def __str__(self):
         return '%s%s' % (self.value, self.suit)
 
-    def  __repr__(self):
+    def __repr__(self):
         return self.__str__()
 
     def __cmp__(self, other):
@@ -75,7 +75,7 @@ class Hand(object):
     def __str__(self):
         return "<hand %s, '%s'>" % (self.cards, self.hand_value())
 
-    def  __repr__(self):
+    def __repr__(self):
         return self.__str__()
 
     def __cmp__(self, other_hand):
@@ -133,16 +133,16 @@ class PokerRules(object):
     ROYAL_FLUSH = 10
 
     VALUES = {
-        HIGH_CARD : 'High Card',
-        ONE_PAIR : 'One Pair',
-        TWO_PAIR : 'Two Pair',
-        TREE_OF_A_KIND : 'Tree of a Kind',
-        STRAIGHT : 'Straight',
-        FLUSH : 'Flush',
-        FULL_HOUSE : 'Full House',
-        FOUR_OF_A_KIND : 'Four of a Kind',
-        STRAIGHT_FLUSH : 'Straight Flush',
-        ROYAL_FLUSH : 'Royal Flush'
+        HIGH_CARD: 'High Card',
+        ONE_PAIR: 'One Pair',
+        TWO_PAIR: 'Two Pair',
+        TREE_OF_A_KIND: 'Tree of a Kind',
+        STRAIGHT: 'Straight',
+        FLUSH: 'Flush',
+        FULL_HOUSE: 'Full House',
+        FOUR_OF_A_KIND: 'Four of a Kind',
+        STRAIGHT_FLUSH: 'Straight Flush',
+        ROYAL_FLUSH: 'Royal Flush'
     }
 
     @classmethod
@@ -311,7 +311,7 @@ class PokerRules(object):
     @classmethod
     def get_hand_pairs(cls, hand):
         cards_dict = cls._get_cards_dict(hand)
-        return [kind for kind, amount in  cards_dict.iteritems() if amount == 2]
+        return [kind for kind, amount in cards_dict.iteritems() if amount == 2]
 
     @classmethod
     def draw_two_pair(cls, hand, other_hand):
