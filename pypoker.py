@@ -1,5 +1,3 @@
-SUITS = 1
-
 class Card(object):
     SUITS = {
         'C': True,
